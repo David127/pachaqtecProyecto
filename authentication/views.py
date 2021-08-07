@@ -33,7 +33,7 @@ class RegisterView(generics.GenericAPIView):
         token = RefreshToken.for_user(user).access_token
 
         relative_link = reverse_lazy('mail_verify')
-        url = f'{environ.get("URL_EMAIL")}/{relative_link}?token={token}'
+        url = f'{environ.get("URL_EMAIL")}{relative_link}?token={token}'
 
         data = {
             'subject': 'Prueba',
