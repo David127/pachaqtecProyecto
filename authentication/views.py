@@ -113,7 +113,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
             token = PasswordResetTokenGenerator().make_token(user)
             relative_link = reverse('password_reset', kwargs={'uidb64': uidb64, 'token': token})
-            url = f'{environ.get("URL_EMAIL")}/{relative_link}'
+            url = f'{environ.get("URL_EMAIL")}{relative_link}'
 
             data = {
                 'subject': 'Resetear contraseña',
