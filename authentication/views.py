@@ -12,7 +12,7 @@ from drf_yasg.utils import swagger_auto_schema
 from jwt import decode, ExpiredSignatureError, DecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import smart_str, smart_bytes, DjangoUnicodeDecodeError
-
+from os import environ
 from .helpers import send_email
 
 from .models import User
@@ -33,7 +33,7 @@ class RegisterView(generics.GenericAPIView):
         token = RefreshToken.for_user(user).access_token
 
         relative_link = reverse_lazy('mail_verify')
-        url = f'http://127.0.0.1:8000{relative_link}?token={token}'
+        url = f'{environ.get("URL_EMAIL")}/{relative_link}?token={token}'
 
         data = {
             'subject': 'Prueba',
@@ -113,7 +113,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
             token = PasswordResetTokenGenerator().make_token(user)
             relative_link = reverse('password_reset', kwargs={'uidb64': uidb64, 'token': token})
-            url = f'http://127.0.0.1:8000{relative_link}'
+            url = f'{environ.get("URL_EMAIL")}/{relative_link}'
 
             data = {
                 'subject': 'Resetear contraseña',

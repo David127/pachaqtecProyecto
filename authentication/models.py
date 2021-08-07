@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    nombre = models.CharField(null=False, max_length=255)#Falta(puede no ir)
+    nombre = models.CharField(null=False, max_length=255)
     username = models.CharField(max_length=255, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     celular = models.CharField(max_length=15)
